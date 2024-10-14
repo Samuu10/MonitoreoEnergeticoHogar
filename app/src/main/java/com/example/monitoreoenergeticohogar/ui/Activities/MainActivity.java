@@ -9,20 +9,25 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.monitoreoenergeticohogar.R;
+import com.example.monitoreoenergeticohogar.ui.FirebaseHelper;
 
-
-public class MainActivity extends AppCompatActivity {
+// Clase principal de la actividad que implementa FirebaseHelper.OnDataLoadedListener para
+public class MainActivity extends AppCompatActivity implements FirebaseHelper.OnDataLoadedListener {
 
     private TextView tvValorConsumoActual, tvValorConsumoMensual;
+    private FirebaseHelper firebaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Referencias a las tarjetas de consumo
+        //Referenciasmos las tarjetas de consumo
         tvValorConsumoActual = findViewById(R.id.tv_valor_consumo_actual);
         tvValorConsumoMensual = findViewById(R.id.tv_valor_consumo_mensual);
+
+        // Inicializa FirebaseHelper
+        firebaseHelper = new FirebaseHelper(this);
 
         //Botón para navegar a la actividad de estadísticas
         findViewById(R.id.btn_estadisticas).setOnClickListener(v -> {
@@ -42,24 +47,32 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Simulación de la carga de datos de consumo (puedes cargar esto desde Firebase)
+        //Cargamos los datos de consumo cuando la actividad se crea
         cargarDatosConsumo();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //Cargamos los datos de consumo cuando la actividad se reanuda
         cargarDatosConsumo();
     }
 
-    // Método para cargar los datos de consumo (en este ejemplo es fijo, pero puede venir de Firebase)
+    //Método para cargar los datos de consumo desde Firebase
     private void cargarDatosConsumo() {
-        // Datos simulados
-        double consumoActual = 23.5; // kWh
-        double consumoMensual = 150.75; // kWh
+        firebaseHelper.cargarConsumoActual();
+    }
 
-        // Mostrar los datos en las tarjetas
-        tvValorConsumoActual.setText(consumoActual + " kWh");
-        tvValorConsumoMensual.setText(consumoMensual + " kWh");
+    //Método para mostrar los datos de consumo en las tarjetas
+    @Override
+    public void onDataLoaded(double consumoActual, double consumoMensual) {
+        tvValorConsumoActual.setText(consumoActual + " kW/h");
+        tvValorConsumoMensual.setText(consumoMensual + " kW/h");
+    }
+
+    //Método para mostrar un mensaje en caso de error
+    @Override
+    public void onError(String error) {
+        Toast.makeText(this, "Error: " + error, Toast.LENGTH_SHORT).show();
     }
 }
