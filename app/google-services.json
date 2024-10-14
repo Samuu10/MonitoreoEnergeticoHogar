@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "884462756051",
+    "project_id": "monitoreoenergeticohogar",
+    "storage_bucket": "monitoreoenergeticohogar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884462756051:android:04197db9f6a62d19c3f426",
+        "android_client_info": {
+          "package_name": "com.example.monitoreoenergeticohogar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG9NV6jVUELqo329FhfaEzwTJ-cOJGIDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
