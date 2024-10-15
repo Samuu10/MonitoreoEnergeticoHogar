@@ -2,13 +2,14 @@ package com.example.monitoreoenergeticohogar.ui;
 
 import android.os.Handler;
 import android.os.Looper;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.DataSnapshot;
+import java.util.HashMap;
 
+//Clase para manejar las operaciones de datos con Firebase
 public class FirebaseHelper {
+
     //Variables
     private DatabaseReference databaseReference;
     private OnDataLoadedListener listener;
@@ -19,53 +20,85 @@ public class FirebaseHelper {
         databaseReference = FirebaseDatabase.getInstance().getReference("consumo");
     }
 
-    //Método para cargar los datos de consumo actual
+    //Método para cargar los datos de consumo actual en segundo plano
     public void cargarConsumoActual() {
-        //Listener para obtener el valor de consumo actual
-        databaseReference.child("actual").child("valor").addListenerForSingleValueEvent(new ValueEventListener() {
-
-            //Método para obtener el valor de consumo actual y pasarselo a cargarConsumoMensual
+        new FirebaseAsyncTask(databaseReference, "actual/valor", new FirebaseAsyncTask.OnDataLoadedListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Cogemos el valor de consumo actual y lo pasamos a double
+            public void onDataLoaded(DataSnapshot dataSnapshot) {
                 double consumoActual = dataSnapshot.getValue(Double.class);
-                //Llamamos al método para cargar el consumo mensual
                 cargarConsumoMensual(consumoActual);
             }
 
-            //Método para mostrar un mensaje en caso de error
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.onError(databaseError.getMessage());
+            public void onError(String error) {
+                listener.onError(error);
             }
-        });
+        }).execute();
     }
 
-    //Método para cargar los datos de consumo mensual
+    //Método para cargar los datos de consumo mensual en segundo plano
     private void cargarConsumoMensual(double consumoActual) {
-        //Listener para obtener el valor de consumo mensual
-        databaseReference.child("mensual").child("valor").addListenerForSingleValueEvent(new ValueEventListener() {
-
-            //Método para obtener el valor de consumo mensual y pasarselo a onDataLoaded
+        new FirebaseAsyncTask(databaseReference, "mensual/valor", new FirebaseAsyncTask.OnDataLoadedListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Cogemos el valor de consumo mensual y lo pasamos a double
+            public void onDataLoaded(DataSnapshot dataSnapshot) {
                 double consumoMensual = dataSnapshot.getValue(Double.class);
-                //Creamos un hadler, para que se ejecute en el hilo principal
                 new Handler(Looper.getMainLooper()).post(() -> listener.onDataLoaded(consumoActual, consumoMensual));
             }
 
-            //Método para mostrar un mensaje en caso de error
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.onError(databaseError.getMessage());
+            public void onError(String error) {
+                listener.onError(error);
             }
-        });
+        }).execute();
     }
 
-    //Interfaz para el listener de los datos
+    //Método para cargar los datos de consumo de electrodomésticos en segundo plano
+    public void cargarConsumoElectrodomesticos() {
+        new FirebaseAsyncTask(databaseReference, "electrodomesticos", new FirebaseAsyncTask.OnDataLoadedListener() {
+            @Override
+            public void onDataLoaded(DataSnapshot dataSnapshot) {
+                HashMap<String, Double> consumoElectrodomesticos = new HashMap<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String nombre = snapshot.getKey();
+                    Double consumo = snapshot.getValue(Double.class);
+                    consumoElectrodomesticos.put(nombre, consumo);
+                }
+                new Handler(Looper.getMainLooper()).post(() -> listener.onDataLoadedElectrodomesticos(consumoElectrodomesticos));
+            }
+
+            @Override
+            public void onError(String error) {
+                listener.onError(error);
+            }
+        }).execute();
+    }
+
+    //Método para cargar los datos de consumo de habitaciones en segundo plano
+    public void cargarConsumoHabitaciones() {
+        new FirebaseAsyncTask(databaseReference, "habitaciones", new FirebaseAsyncTask.OnDataLoadedListener() {
+            @Override
+            public void onDataLoaded(DataSnapshot dataSnapshot) {
+                HashMap<String, Double> consumoHabitaciones = new HashMap<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String habitacion = snapshot.getKey();
+                    Double consumo = snapshot.getValue(Double.class);
+                    consumoHabitaciones.put(habitacion, consumo);
+                }
+                new Handler(Looper.getMainLooper()).post(() -> listener.onDataLoadedHabitaciones(consumoHabitaciones));
+            }
+
+            @Override
+            public void onError(String error) {
+                listener.onError(error);
+            }
+        }).execute();
+    }
+
+    //Interfaz para manejar los datos cargados
     public interface OnDataLoadedListener {
         void onDataLoaded(double consumoActual, double consumoMensual);
+        void onDataLoadedElectrodomesticos(HashMap<String, Double> consumoElectrodomesticos);
+        void onDataLoadedHabitaciones(HashMap<String, Double> consumoHabitaciones);
         void onError(String error);
     }
 }

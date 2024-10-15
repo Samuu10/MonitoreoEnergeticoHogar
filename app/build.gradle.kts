@@ -4,6 +4,7 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+
 android {
     namespace = "com.example.monitoreoenergeticohogar"
     compileSdk = 34
@@ -72,4 +73,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation(platform("com.google.firebase:firebase-database-ktx:20.2.1"))
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

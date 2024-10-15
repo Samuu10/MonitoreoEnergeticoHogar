@@ -24,9 +24,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.Activities.EstadisticasActivity" />
-        <activity android:name=".ui.Activities.AnalisisActivity" />
-        <activity android:name=".ui.Activities.HistorialActivity" />
+        <activity android:name=".ui.Activities.EstadisticasActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+        <activity android:name=".ui.Activities.AnalisisActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+        <activity android:name=".ui.Activities.HistorialActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+
     </application>
 
 </manifest>

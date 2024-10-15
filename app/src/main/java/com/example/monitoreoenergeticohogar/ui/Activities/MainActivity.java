@@ -2,14 +2,15 @@ package com.example.monitoreoenergeticohogar.ui.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.monitoreoenergeticohogar.R;
 import com.example.monitoreoenergeticohogar.ui.FirebaseHelper;
+
+import java.util.HashMap;
 
 // Clase principal de la actividad que implementa FirebaseHelper.OnDataLoadedListener para
 public class MainActivity extends AppCompatActivity implements FirebaseHelper.OnDataLoadedListener {
@@ -68,6 +69,16 @@ public class MainActivity extends AppCompatActivity implements FirebaseHelper.On
     public void onDataLoaded(double consumoActual, double consumoMensual) {
         tvValorConsumoActual.setText(consumoActual + " kW/h");
         tvValorConsumoMensual.setText(consumoMensual + " kW/h");
+    }
+
+    @Override
+    public void onDataLoadedElectrodomesticos(HashMap<String, Double> consumoElectrodomesticos) {
+        //No hace falta implementar nada para esta actividad
+    }
+
+    @Override
+    public void onDataLoadedHabitaciones(HashMap<String, Double> consumoHabitaciones) {
+        //No hace falta implementar nada en esta actividad
     }
 
     //Método para mostrar un mensaje en caso de error

@@ -28,6 +28,52 @@
         android:layout_marginTop="0dp"
         android:layout_marginLeft="15dp" />
 
+    <TextView
+        android:id="@+id/tituloG1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consumo de energía por habitación (kw/h)"
+        android:textColor="@android:color/holo_blue_bright"
+        android:layout_below="@id/subtitulo"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp" />
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart"
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
+        android:layout_below="@id/tituloG1"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:id="@+id/tituloG2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consumo de energía por electrodoméstico (kw/h)"
+        android:textColor="@android:color/holo_blue_bright"
+        android:layout_below="@id/pie_chart"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp" />
+
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/bar_chart"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_below="@id/tituloG2"
+        android:layout_above="@id/btn_volver"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
 
     <Button
         android:id="@+id/btn_volver"
