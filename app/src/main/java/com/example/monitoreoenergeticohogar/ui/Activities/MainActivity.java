@@ -8,11 +8,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.monitoreoenergeticohogar.R;
-import com.example.monitoreoenergeticohogar.ui.FirebaseHelper;
+import com.example.monitoreoenergeticohogar.ui.Firebase.FirebaseHelper;
+import com.example.monitoreoenergeticohogar.ui.Historial.ConsumoHistorial;
 
 import java.util.HashMap;
+import java.util.List;
 
-// Clase principal de la actividad que implementa FirebaseHelper.OnDataLoadedListener para
+//Actividad principal de la aplicación
 public class MainActivity extends AppCompatActivity implements FirebaseHelper.OnDataLoadedListener {
 
     private TextView tvValorConsumoActual, tvValorConsumoMensual;
@@ -78,6 +80,11 @@ public class MainActivity extends AppCompatActivity implements FirebaseHelper.On
 
     @Override
     public void onDataLoadedHabitaciones(HashMap<String, Double> consumoHabitaciones) {
+        //No hace falta implementar nada en esta actividad
+    }
+
+    @Override
+    public void onHistorialLoaded(List<ConsumoHistorial> historialList) {
         //No hace falta implementar nada en esta actividad
     }
 

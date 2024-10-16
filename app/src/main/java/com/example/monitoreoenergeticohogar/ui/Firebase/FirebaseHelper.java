@@ -1,11 +1,16 @@
-package com.example.monitoreoenergeticohogar.ui;
+package com.example.monitoreoenergeticohogar.ui.Firebase;
 
 import android.os.Handler;
 import android.os.Looper;
+
+import com.example.monitoreoenergeticohogar.ui.Historial.ConsumoHistorial;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 //Clase para manejar las operaciones de datos con Firebase
 public class FirebaseHelper {
@@ -94,11 +99,34 @@ public class FirebaseHelper {
         }).execute();
     }
 
+    //Método para cargar el historial de consumo en segundo plano
+    public void cargarHistorialConsumo() {
+        new FirebaseAsyncTask(databaseReference, "historial", new FirebaseAsyncTask.OnDataLoadedListener() {
+            @Override
+            public void onDataLoaded(DataSnapshot dataSnapshot) {
+                List<ConsumoHistorial> historialList = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String mes = snapshot.child("mes").getValue(String.class);
+                    double consumo = snapshot.child("consumo").getValue(Double.class);
+                    double precio = snapshot.child("precio").getValue(Double.class);
+                    historialList.add(new ConsumoHistorial(mes, consumo, precio));
+                }
+                new Handler(Looper.getMainLooper()).post(() -> listener.onHistorialLoaded(historialList));
+            }
+
+            @Override
+            public void onError(String error) {
+                listener.onError(error);
+            }
+        }).execute();
+    }
+
     //Interfaz para manejar los datos cargados
     public interface OnDataLoadedListener {
         void onDataLoaded(double consumoActual, double consumoMensual);
         void onDataLoadedElectrodomesticos(HashMap<String, Double> consumoElectrodomesticos);
         void onDataLoadedHabitaciones(HashMap<String, Double> consumoHabitaciones);
+        void onHistorialLoaded(List<ConsumoHistorial> historialList);
         void onError(String error);
     }
 }

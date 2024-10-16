@@ -3,8 +3,12 @@ package com.example.monitoreoenergeticohogar.ui.Estadisticas;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.example.monitoreoenergeticohogar.ui.FirebaseHelper;
+
+import com.example.monitoreoenergeticohogar.ui.Firebase.FirebaseHelper;
+import com.example.monitoreoenergeticohogar.ui.Historial.ConsumoHistorial;
+
 import java.util.HashMap;
+import java.util.List;
 
 //Clase para visualizar los datos de consumo de electrodomésticos y habitaciones
 public class EstadisticasViewModel extends ViewModel implements FirebaseHelper.OnDataLoadedListener {
@@ -49,6 +53,11 @@ public class EstadisticasViewModel extends ViewModel implements FirebaseHelper.O
 
     @Override
     public void onDataLoaded(double consumoActual, double consumoMensual) {
+        //No hace falta implementar nada para esta actividad
+    }
+
+    @Override
+    public void onHistorialLoaded(List<ConsumoHistorial> historialList) {
         //No hace falta implementar nada para esta actividad
     }
 

@@ -1,12 +1,12 @@
-package com.example.monitoreoenergeticohogar.ui;
+package com.example.monitoreoenergeticohogar.ui.Firebase;
 
 import android.os.AsyncTask;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+//Clase para cargar los datos de Firebase en segundo plano
 public class FirebaseAsyncTask extends AsyncTask <Void, Void, DataSnapshot> {
 
     //Variables
@@ -52,6 +52,7 @@ public class FirebaseAsyncTask extends AsyncTask <Void, Void, DataSnapshot> {
         return dataSnapshot[0];
     }
 
+    //Método para manejar el resultado de la tarea
     @Override
     protected void onPostExecute(DataSnapshot dataSnapshot) {
         if (dataSnapshot != null) {
@@ -61,6 +62,7 @@ public class FirebaseAsyncTask extends AsyncTask <Void, Void, DataSnapshot> {
         }
     }
 
+    //Interfaz para manejar los datos cargados
     public interface OnDataLoadedListener {
         void onDataLoaded(DataSnapshot dataSnapshot);
         void onError(String error);
