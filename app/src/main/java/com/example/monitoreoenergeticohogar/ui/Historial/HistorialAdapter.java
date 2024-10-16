@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.monitoreoenergeticohogar.R;
 import java.util.List;
 
-//Adaptador para el RecyclerView de historial de consumo
+//Adaptador para el RecyclerView del historial de consumo
 public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.HistorialViewHolder>{
 
     //Variables
-    private List<ConsumoHistorial> historialList;
+    private List<Historial> historialList;
 
     //Constructor
-    public HistorialAdapter(List<ConsumoHistorial> historialList) {
+    public HistorialAdapter(List<Historial> historialList) {
         this.historialList = historialList;
     }
 
@@ -31,7 +31,7 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
     //Método para enlazar los datos con el ViewHolder
     @Override
     public void onBindViewHolder(@NonNull HistorialViewHolder holder, int position) {
-        ConsumoHistorial historial = historialList.get(position);
+        Historial historial = historialList.get(position);
         holder.mesTextView.setText(historial.getMes());
         holder.consumoTextView.setText(String.valueOf(historial.getConsumo()) + " kW/h");
         holder.precioTextView.setText("$" + String.valueOf(historial.getPrecio()));

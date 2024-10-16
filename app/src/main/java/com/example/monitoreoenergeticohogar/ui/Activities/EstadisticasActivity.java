@@ -71,7 +71,6 @@ public class EstadisticasActivity extends AppCompatActivity {
         //Inicializar el ViewModel
         viewModel = new ViewModelProvider(this).get(EstadisticasViewModel.class);
 
-
         //Observamos los datos de consumo de habitaciones para actualizar el gráfico circular
         viewModel.getConsumoHabitaciones().observe(this, new Observer<HashMap<String, Double>>() {
             @Override

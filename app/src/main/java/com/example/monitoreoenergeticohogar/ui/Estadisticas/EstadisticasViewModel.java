@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.monitoreoenergeticohogar.ui.Firebase.FirebaseHelper;
-import com.example.monitoreoenergeticohogar.ui.Historial.ConsumoHistorial;
+import com.example.monitoreoenergeticohogar.ui.Historial.Historial;
+import com.example.monitoreoenergeticohogar.ui.Recomendaciones.Recomendacion;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public class EstadisticasViewModel extends ViewModel implements FirebaseHelper.O
         cargarDatosConsumo();
     }
 
-    // Método para cargar datos de consumo desde Firebase
+    //Método para cargar datos de consumo desde Firebase
     public void cargarDatosConsumo() {
         firebaseHelper.cargarConsumoElectrodomesticos();
         firebaseHelper.cargarConsumoHabitaciones();
@@ -52,13 +53,18 @@ public class EstadisticasViewModel extends ViewModel implements FirebaseHelper.O
     }
 
     @Override
-    public void onDataLoaded(double consumoActual, double consumoMensual) {
+    public void onDataLoaded(double consumoActual, double consumoMensual, double consumoAnual) {
         //No hace falta implementar nada para esta actividad
     }
 
     @Override
-    public void onHistorialLoaded(List<ConsumoHistorial> historialList) {
+    public void onHistorialLoaded(List<Historial> historialList) {
         //No hace falta implementar nada para esta actividad
+    }
+
+    @Override
+    public void onRecomendacionesLoaded(List<Recomendacion> recomendacionList){
+        //No hace falta implementar nada en esta actividad
     }
 
     @Override

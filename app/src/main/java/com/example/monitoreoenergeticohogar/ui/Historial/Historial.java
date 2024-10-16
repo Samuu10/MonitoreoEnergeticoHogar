@@ -1,7 +1,7 @@
 package com.example.monitoreoenergeticohogar.ui.Historial;
 
-//Clase para almacenar el historial de consumo de energía del hogar
-public class ConsumoHistorial {
+//Clase que define un registro de historial de consumo
+public class Historial {
 
     //Variables
     private String mes;
@@ -9,7 +9,7 @@ public class ConsumoHistorial {
     private double precio;
 
     //Constructor
-    public ConsumoHistorial(String mes, double consumo, double precio) {
+    public Historial(String mes, double consumo, double precio) {
         this.mes = mes;
         this.consumo = consumo;
         this.precio = precio;

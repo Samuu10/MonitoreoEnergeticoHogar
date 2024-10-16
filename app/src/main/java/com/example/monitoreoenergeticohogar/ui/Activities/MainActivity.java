@@ -4,12 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.monitoreoenergeticohogar.R;
 import com.example.monitoreoenergeticohogar.ui.Firebase.FirebaseHelper;
-import com.example.monitoreoenergeticohogar.ui.Historial.ConsumoHistorial;
+import com.example.monitoreoenergeticohogar.ui.Historial.Historial;
+import com.example.monitoreoenergeticohogar.ui.Recomendaciones.Recomendacion;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 //Actividad principal de la aplicación
 public class MainActivity extends AppCompatActivity implements FirebaseHelper.OnDataLoadedListener {
 
-    private TextView tvValorConsumoActual, tvValorConsumoMensual;
+    private TextView tvValorConsumoActual, tvValorConsumoMensual, tvValorConsumoAnual;
     private FirebaseHelper firebaseHelper;
 
     @Override
@@ -28,8 +27,9 @@ public class MainActivity extends AppCompatActivity implements FirebaseHelper.On
         //Referenciasmos las tarjetas de consumo
         tvValorConsumoActual = findViewById(R.id.tv_valor_consumo_actual);
         tvValorConsumoMensual = findViewById(R.id.tv_valor_consumo_mensual);
+        tvValorConsumoAnual = findViewById(R.id.tv_valor_consumo_anual);
 
-        // Inicializa FirebaseHelper
+        //Inicializa FirebaseHelper
         firebaseHelper = new FirebaseHelper(this);
 
         //Botón para navegar a la actividad de estadísticas
@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity implements FirebaseHelper.On
             startActivity(intent);
         });
 
-        //Botón para navegar a la actividad de análisis
-        findViewById(R.id.btn_analisis).setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AnalisisActivity.class);
+        //Botón para navegar a la actividad de recomendaciones
+        findViewById(R.id.btn_recomendaciones).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RecomendacionesActivity.class);
             startActivity(intent);
         });
 
@@ -68,9 +68,10 @@ public class MainActivity extends AppCompatActivity implements FirebaseHelper.On
 
     //Método para mostrar los datos de consumo en las tarjetas
     @Override
-    public void onDataLoaded(double consumoActual, double consumoMensual) {
+    public void onDataLoaded(double consumoActual, double consumoMensual, double consumoAnual) {
         tvValorConsumoActual.setText(consumoActual + " kW/h");
         tvValorConsumoMensual.setText(consumoMensual + " kW/h");
+        tvValorConsumoAnual.setText(consumoAnual + " kW/h");
     }
 
     @Override
@@ -84,7 +85,12 @@ public class MainActivity extends AppCompatActivity implements FirebaseHelper.On
     }
 
     @Override
-    public void onHistorialLoaded(List<ConsumoHistorial> historialList) {
+    public void onHistorialLoaded(List<Historial> historialList) {
+        //No hace falta implementar nada en esta actividad
+    }
+
+    @Override
+    public void onRecomendacionesLoaded(List<Recomendacion> recomendacionList){
         //No hace falta implementar nada en esta actividad
     }
 

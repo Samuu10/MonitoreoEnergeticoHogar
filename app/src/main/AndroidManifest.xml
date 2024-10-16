@@ -26,7 +26,7 @@
 
         <activity android:name=".ui.Activities.EstadisticasActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
-        <activity android:name=".ui.Activities.AnalisisActivity"
+        <activity android:name=".ui.Activities.RecomendacionesActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
         <activity android:name=".ui.Activities.HistorialActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
